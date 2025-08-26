@@ -36,7 +36,7 @@ class LLMAgent {
         this.clearChatBtn.addEventListener('click', () => this.clearChat());
 
         // Initialize with welcome message
-        this.addMessage('agent', 'Welcome to AgentFlow! 🧠 I\'m your intelligent AI assistant with powerful multi-tool capabilities. I can help you with real-time web searches, AI-powered workflows, and code execution. Configure your API keys to unlock my full potential, or explore my capabilities right away. What would you like to accomplish today?');
+        this.addMessage('agent', 'Welcome to AgentFlow! I\'m your intelligent AI assistant with powerful multi-tool capabilities. I can help you with real-time web searches, AI-powered workflows, and code execution. Configure your API keys to unlock my full potential, or explore my capabilities right away. What would you like to accomplish today?');
         this.updateMessageCount();
     }
 
@@ -67,7 +67,7 @@ class LLMAgent {
         this.conversationEl.innerHTML = '';
         
         // Add welcome message back
-        this.addMessage('agent', 'Welcome back to AgentFlow! 🧠 I\'m ready to assist you with intelligent searches, AI workflows, and code execution. What can I help you accomplish?');
+        this.addMessage('agent', 'Welcome back to AgentFlow! I\'m ready to assist you with intelligent searches, AI workflows, and code execution. What can I help you accomplish?');
         
         // Update message count
         this.updateMessageCount();
@@ -716,7 +716,7 @@ Available workflows for ai_pipe: summarize, analyze_sentiment, extract_keywords,
                     throw new Error(`Unknown tool: ${name}`);
             }
 
-            this.addMessage('tool', `✅ ${name} completed:\n${this.formatSearchResults(result)}`);
+            this.addMessage('tool', ` ${name} completed:\n${this.formatSearchResults(result)}`);
             
             return {
                 role: 'tool',
@@ -724,7 +724,7 @@ Available workflows for ai_pipe: summarize, analyze_sentiment, extract_keywords,
                 content: JSON.stringify(result)
             };
         } catch (error) {
-            const errorMsg = `❌ ${name} failed: ${error.message}`;
+            const errorMsg = ` ${name} failed: ${error.message}`;
             this.addMessage('tool', errorMsg);
             return {
                 role: 'tool',
@@ -1005,7 +1005,7 @@ Available workflows for ai_pipe: summarize, analyze_sentiment, extract_keywords,
             result.results.forEach((item, index) => {
                 formatted += `${index + 1}. **${item.title}**\n`;
                 formatted += `   ${item.snippet}\n`;
-                formatted += `   🔗 ${item.link}\n\n`;
+                formatted += `    ${item.link}\n\n`;
             });
             
             return formatted;

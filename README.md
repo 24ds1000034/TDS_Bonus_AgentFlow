@@ -1,126 +1,120 @@
-# AgentFlow - Intelligent Multi-Tool AI Assistant
+# TDS_AgentFlow – Web-Based Multi-Tool AI System
 
-An advanced browser-based AI agent that uses multiple tools in a reasoning loop to accomplish complex tasks intelligently.
+IntelliFlow is a browser-based intelligent agent framework designed to coordinate multiple computational tools in a reasoning-driven cycle. It integrates large language models (LLMs), search APIs, and browser-based code execution to accomplish complex tasks autonomously.
+
+---
 
 ## Features
 
-- **Multi-LLM Support**: OpenAI, Anthropic, and Google models
-- **Intelligent Tool Integration**:
-  - Google Search API for real-time web information retrieval
-  - AI Pipe API for flexible data workflows and processing
-  - JavaScript Code Execution (secure browser-based execution)
-- **Smart Reasoning Loop**: Continues executing tools until the task is complete
-- **Professional UI**: Modern, responsive interface with comprehensive error handling
+- **Multi-LLM Compatibility**
+  - Works with OpenAI, Anthropic, and Google models
 
-## Setup
+- **Integrated Tooling**
+  - Google Search API for real-time information retrieval  
+  - AI Pipe API for customizable workflows (summarization, sentiment analysis, etc.)  
+  - Secure JavaScript execution within the browser  
 
-1. Open `index.html` in a modern web browser
-2. Configure your API keys:
-   - **LLM Provider API Key**: OpenAI, Anthropic, or Google
-   - **Google Search API Key**: For web search functionality
-   - **Search Engine ID**: Custom search engine ID from Google
+- **Adaptive Reasoning**
+  - Iterative decision-making loop that continues until the task is complete  
 
-### Getting API Keys
+- **User-Friendly Interface**
+  - Responsive and modern design with robust error handling  
 
-#### OpenAI API Key
-1. Visit [OpenAI API](https://platform.openai.com/api-keys)
-2. Create a new API key
-3. Copy and paste into the configuration
+---
 
-#### Google Search API
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Enable the Custom Search JSON API
-3. Create credentials (API key)
-4. Set up a Custom Search Engine at [Custom Search](https://cse.google.com/)
+## Installation & Setup
 
-#### Anthropic API Key
-1. Visit [Anthropic Console](https://console.anthropic.com/)
-2. Generate an API key
-3. Use with Claude models
+1. Open `index.html` in a modern web browser.  
+2. Configure required API keys:
+   - **LLM Provider Key** (OpenAI, Anthropic, or Google)  
+   - **Google Search API Key**  
+   - **Custom Search Engine ID**  
 
-## Usage Examples
+---
 
-### Example 1: Research Assistant
+### Obtaining API Keys
+
+#### OpenAI
+- [Generate API Key](https://platform.openai.com/api-keys)
+
+#### Google Search
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)  
+2. Enable *Custom Search JSON API*  
+3. Generate API key and configure [Custom Search Engine](https://cse.google.com/)  
+
+#### Anthropic
+- [Generate API Key](https://console.anthropic.com/) for Claude models  
+
+---
+
+## Example Use Cases
+
+### Research Assistant
+```plaintext
+Prompt: "Summarize recent advancements in quantum computing"
 ```
-User: "Research the latest developments in quantum computing and create a summary"
-```
-The agent will:
-1. Search for quantum computing information
-2. Analyze and summarize findings
-3. Present structured results
+- Retrieves relevant research  
+- Produces structured summary  
 
-### Example 2: Data Analysis
+### Data Analysis
+```plaintext
+Prompt: "Generate sample data and compute statistics"
 ```
-User: "Generate some random data and calculate statistics"
-```
-The agent will:
-1. Execute JavaScript to generate data
-2. Calculate statistical measures
-3. Display results with visualizations
+- Runs in-browser JavaScript  
+- Produces statistical insights  
 
-### Example 3: Interview Bot
+### Interview Assistant
+```plaintext
+Prompt: "Interview me for a blog post on IBM"
 ```
-User: "Interview me to create a blog post about IBM"
-```
-The agent will:
-1. Search for IBM information
-2. Ask relevant questions
-3. Structure responses into blog format
+- Gathers background info  
+- Structures an interview-based article  
 
-## Tool Capabilities
+---
+
+## Tool Modules
 
 ### 🔍 Google Search
-- Retrieves relevant web snippets
-- Configurable number of results
-- Real-time information access
+- Real-time web retrieval  
+- Adjustable number of results  
 
 ### 🤖 AI Pipe API
-- Simulated AI workflows (extendable)
-- Text summarization
-- Sentiment analysis
-- Keyword extraction
-- Translation services
+- Summarization, keyword extraction, sentiment analysis, translation  
 
 ### 💻 JavaScript Execution
-- Safe browser-based code execution
-- Console output capture
-- Result display with syntax highlighting
-- Access to demo utility functions
+- Secure execution within browser sandbox  
+- Captures console output  
+- Syntax-highlighted results  
 
-## Architecture
+---
 
-### Core Agent Loop
+## Architecture Overview
+
+### Agent Reasoning Cycle
 ```javascript
-async agentLoop() {
+async agentCycle() {
     while (true) {
-        const response = await this.callLLM();
-        
-        if (response.content) {
-            this.addMessage('agent', response.content);
-        }
+        const reply = await this.queryLLM();
+        if (reply.content) this.addMessage('agent', reply.content);
 
-        if (response.tool_calls && response.tool_calls.length > 0) {
-            // Execute tools and continue loop
-            const toolResults = await Promise.all(
-                response.tool_calls.map(tc => this.handleToolCall(tc))
+        if (reply.tool_calls?.length > 0) {
+            const results = await Promise.all(
+                reply.tool_calls.map(tc => this.processToolCall(tc))
             );
-            // Add results to conversation and continue
         } else {
-            // No more tools needed, wait for user input
             break;
         }
     }
 }
 ```
 
-### Tool Calling Interface
-Uses OpenAI's function calling format:
+### Tool Invocation Schema (OpenAI-style function calling)
 ```json
 {
   "type": "function",
   "function": {
     "name": "google_search",
-    "description": "Search Google for information",
+    "description": "Retrieve information via Google Search",
     "parameters": {
       "type": "object",
       "properties": {
@@ -132,74 +126,71 @@ Uses OpenAI's function calling format:
 }
 ```
 
-## Demo JavaScript Functions
+---
 
-The agent has access to several utility functions:
+## Built-in Demo Functions
 
 ```javascript
-// Calculate Fibonacci numbers
-demoFunctions.fibonacci(10)
-
-// Check if number is prime
-demoFunctions.isPrime(17)
-
-// Generate random data
-demoFunctions.generateRandomData(10)
+demo.fibonacci(10)       // Fibonacci sequence
+demo.isPrime(17)         // Prime number check
+demo.generateData(10)    // Random dataset generation
 ```
+
+---
 
 ## Error Handling
 
-- **Bootstrap Alerts**: User-friendly error messages
-- **API Error Recovery**: Graceful handling of API failures
-- **Input Validation**: Prevents invalid operations
-- **Safe Code Execution**: Sandboxed JavaScript execution
+- User-friendly alerts  
+- Automatic API error recovery  
+- Input validation  
+- Safe code execution in browser sandbox  
 
-## Browser Compatibility
+---
 
-- Chrome 80+
-- Firefox 75+
-- Safari 13+
-- Edge 80+
+## Browser Support
 
-## Security Considerations
+- Chrome 80+  
+- Firefox 75+  
+- Safari 13+  
+- Edge 80+  
 
-- API keys stored in browser session only
-- JavaScript execution is sandboxed to browser context
-- No server-side code execution
-- CORS policies apply to external API calls
+---
 
-## Extension Ideas
+## Security
 
-1. **File Upload**: Allow document analysis
-2. **Image Generation**: Integrate DALL-E or similar
-3. **Voice Interface**: Add speech-to-text input
-4. **Export Features**: Save conversations as PDF/Markdown
-5. **Plugin System**: Extensible tool architecture
-6. **Local Storage**: Persist conversations and settings
+- API keys stored in browser session only  
+- No server-side execution  
+- CORS restrictions apply for external APIs  
+
+---
+
+## Roadmap / Extensions
+
+- Document upload and analysis  
+- Image generation integration  
+- Voice interface (speech-to-text)  
+- Export options (PDF/Markdown)  
+- Plugin system for extensibility  
+- Local storage for persistence  
+
+---
 
 ## Troubleshooting
 
-### Common Issues
+- **Missing API key** → Verify credentials  
+- **Google Search errors** → Check API key, CSE ID, and quota  
+- **CORS restrictions** → Use proxy setup if needed  
+- **Tool execution errors** → Validate code syntax and connectivity  
 
-**"Please provide an API key"**
-- Ensure you've entered your LLM provider API key
-
-**"Google Search API error"**
-- Verify Google Search API key and Search Engine ID
-- Check API quotas and billing
-
-**"CORS Error"**
-- Some APIs may require proxy setup for browser use
-- Consider deploying with a simple backend proxy
-
-**"Tool execution failed"**
-- Check JavaScript syntax in code execution
-- Verify network connectivity for external APIs
+---
 
 ## License
 
-MIT License - Feel free to modify and extend!
+Released under the **MIT License**.  
 
-## Creator
+---
 
-**AgentFlow** was created by **Sanket Mishra** - An intelligent multi-tool AI assistant designed to showcase the power of browser-based agent reasoning and workflow automation.
+## Author
+
+Developed by **24DS1000034 - George**  
+Showcasing the potential of browser-based AI reasoning with integrated multi-tool workflows.
